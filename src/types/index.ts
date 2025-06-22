@@ -18,10 +18,17 @@ export type LoginForm = {
 }
 
 export type RegisterForm = {
-  name: string;
-  email: string;
-  password: string;
-  password_confirmation: string;
+  // Store Owner Info
+  name: string
+  email: string
+  phone?: string
+  password: string
+  password_confirmation: string
+
+  // Store Info
+  store_name: string
+  store_image?: File
+  store_location?: string
 }
 
 export type Store = {
@@ -71,12 +78,9 @@ export type Payment = {
 
 export type DashboardStats = {
   totalBorrowers: number
-  totalItemsLent: number
-  totalLentValue: number
   totalOutstanding: number
-  recentTransactions: Transaction[]
   monthlyRevenue: number
-  overdueTransactions: number
+  totalItemsLent: number
 }
 
 export type BorrowerWithStats = User & {
