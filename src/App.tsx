@@ -18,15 +18,19 @@ function App() {
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
       </Route>
-      <Route element={<ProtectedRoutes />}>
-        <Route path="borrower">
-          <Route index element={<BorrowerDashboardPage />} />
-          <Route path="detail" element={<BorrowerDetailPage />} />
-          <Route path="profile" element={<BorrowerProfilePage />} />
-        </Route>
-        <Route path="store-owner">
-          <Route index element={<StoreOwnerDashboardPage />} />
-        </Route>
+      <Route
+        path="borrower"
+        element={<ProtectedRoutes allowedRoles={["borrower"]} />}
+      >
+        <Route index element={<BorrowerDashboardPage />} />
+        <Route path="detail" element={<BorrowerDetailPage />} />
+        <Route path="profile" element={<BorrowerProfilePage />} />
+      </Route>
+      <Route
+        path="store-owner"
+        element={<ProtectedRoutes allowedRoles={["store_owner"]} />}
+      >
+        <Route index element={<StoreOwnerDashboardPage />} />
       </Route>
 
       <Route path="*" element={<NotFoundPage />} />
