@@ -31,6 +31,11 @@ export type RegisterForm = {
   store_location?: string
 }
 
+export type BorrowerRegisterForm = Omit<
+  RegisterForm,
+  "store_image" | "store_name" | "store_location"
+>;
+
 export type Store = {
   id: number
   name: string
