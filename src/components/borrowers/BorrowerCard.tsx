@@ -19,16 +19,16 @@ type BorrowerCardProps = {
 
 export function BorrowerCard({ borrower }: BorrowerCardProps) {
   return (
-    <Card className="group hover:shadow-lg py-2 bg-primary-600 cursor-pointer transition-shadow duration-200 border-0">
+    <Card className="hover:shadow-xl hover:scale-105 transition-all py-2 bg-primary-600 cursor-pointer duration-200 border-0">
       <CardContent className="p-6">
         <div className="flex items-center space-x-4">
           <Avatar className="size-12 ring-2 ring-primary-100">
-            <AvatarFallback className="bg-primary-100 text-primary-700 font-semibold">
+            <AvatarFallback className="bg-primary-100  text-primary-700 font-semibold">
               {getNameInitial(borrower.name)}
             </AvatarFallback>
           </Avatar>
           <div>
-            <h3 className="font-semibold text-white">{borrower.name}</h3>
+            <h3 className="font-semibold  text-white">{borrower.name}</h3>
 
             <p className="text-sm text-primary-100 flex items-center gap-1 mt-1">
               <Phone className="h-3 w-3" />
