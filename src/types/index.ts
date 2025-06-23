@@ -84,11 +84,12 @@ export type DashboardStats = {
 }
 
 export type BorrowerWithStats = User & {
-  totalOutstanding: number
-  totalPaid: number
-  lastTransaction?: string
-  transactionCount: number
-  overdueCount: number
+  total_paid: number;
+  total_loan_amount: number;
+  outstanding_balance: number;
+  transaction_count: number;
+  last_transaction_date?: string;
+  overdue_count: number;
 }
 
 export type PaymentFormData = {

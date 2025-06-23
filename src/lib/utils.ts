@@ -30,3 +30,7 @@ export function formatDateTime(date: string | Date): string {
     minute: "2-digit",
   }).format(new Date(date))
 }
+
+export function getNameInitial(name: string): string {
+  return name.charAt(0).toLocaleUpperCase();
+}
