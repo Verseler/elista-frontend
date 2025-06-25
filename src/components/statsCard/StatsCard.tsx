@@ -2,11 +2,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import type { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-type StatsVariant =  "default" | "destructive" | "success";
+type StatsVariant = "default" | "destructive" | "success";
 
 type StatsCardProps = {
   title: string;
   value: string | number | undefined;
+  withPesoSign?: boolean;
   icon: LucideIcon;
   className?: string;
   variant?: StatsVariant;
@@ -15,6 +16,7 @@ type StatsCardProps = {
 export function StatsCard({
   title,
   value,
+  withPesoSign = false,
   icon: Icon,
   className,
   variant = "default",
@@ -37,7 +39,8 @@ export function StatsCard({
           <div className="space-y-2">
             <p className="text-sm font-medium text-gray-600">{title}</p>
             <p className={cn("text-3xl font-bold", valueVariantStyle[variant])}>
-              {value ?? '-'}
+              {withPesoSign && "₱"}
+              {value ?? 0}
             </p>
           </div>
           <div className="flex-shrink-0">

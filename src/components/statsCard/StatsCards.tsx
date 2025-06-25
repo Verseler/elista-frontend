@@ -11,7 +11,6 @@ import StatsCardsContainer from "@/components/statsCard/StatsCardsContainer";
 
 export function StatsCards() {
   const { data, isLoading } = useGetStoreStats();
-
   if (isLoading) {
     return (
       <StatsCardsContainer>
@@ -31,13 +30,15 @@ export function StatsCards() {
       />
       <StatsCard
         title="Outstanding Amount"
-        value={`₱${data?.totalOutstanding}`}
+        value={data?.totalOutstanding}
+        withPesoSign
         icon={DollarSignIcon}
         variant="destructive"
       />
       <StatsCard
         title="Monthly Revenue"
-        value={`₱${data?.monthlyRevenue}`}
+        value={data?.monthlyRevenue}
+        withPesoSign
         icon={TrendingUpIcon}
         variant="success"
       />
