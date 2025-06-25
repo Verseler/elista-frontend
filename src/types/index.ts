@@ -47,7 +47,6 @@ export type Store = {
 
 export type Transaction = {
   id: number
-  proof_image?: string
   total_price: number
   borrower_id: number
   store_id: number
@@ -59,6 +58,31 @@ export type Transaction = {
   payments?: Payment[]
   remaining_balance?: number
 }
+
+export type TransactionItem = {
+    name: string;
+    price: number;
+    quantity: number;
+};
+
+export type TransactionForm = Partial<
+  Pick<Transaction, "borrower_id">
+> & {
+  items: TransactionItem[];
+  due_date?: Date | undefined;
+};
+
+export type TransactionItemError = {
+    name?: string,
+    price?: string;
+    quantity?: string
+};
+
+export type TransactionFormErrors = Partial<{
+  borrower_id: string;
+  items: TransactionItemError[],
+  due_date?: string;
+}>;
 
 export type Item = {
   id: number
