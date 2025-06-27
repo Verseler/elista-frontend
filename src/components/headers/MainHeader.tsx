@@ -1,6 +1,6 @@
 import AppLogo from "@/components/ui/app-logo";
 import Container from "@/components/ui/container";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useLogout } from "@/api/auth/useLogout";
 import {
   DropdownMenu,
@@ -8,9 +8,14 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useAuth } from "@/hooks/useAuth";
+import { getNameInitial } from "@/lib/utils";
 
 export default function MainHeader() {
+  const { user } = useAuth();
   const { mutate } = useLogout();
+  const userName = user?.name || "User";
+  const nameInitial = getNameInitial(userName);
 
   const handleLogout = () => mutate();
 
@@ -20,11 +25,13 @@ export default function MainHeader() {
         <div className="flex justify-between items-center h-16">
           <AppLogo />
           <div className="flex items-center space-x-4">
+            <span className="text-sm capitalize text-gray-700">{userName}</span>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Avatar className="size-10 cursor-pointer">
-                  <AvatarImage src="https://github.com/shadcn.png" />
-                  <AvatarFallback>CN</AvatarFallback>
+                  <AvatarFallback className="bg-primary-100 text-primary-800  font-semibold">
+                    {nameInitial}
+                  </AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-44">
