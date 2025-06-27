@@ -125,4 +125,5 @@ export type BorrowerWithStats = User & {
   transaction_count: number;
   last_transaction_date?: string;
   transactions: Transaction[];
+  overdue_transactions: Transaction[];
 }
