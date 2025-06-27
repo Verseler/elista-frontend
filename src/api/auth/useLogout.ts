@@ -7,14 +7,12 @@ export const useLogout = () => {
   
   const logout = async () => {
     try {
+      await axios.post("/logout");
+
       localStorage.removeItem("token");
       localStorage.removeItem("user");
       setIsAuthenticated(false);
       setUser(null);
-
-      await axios.post("/logout");
-
-
 
     } catch (error) {
       console.error("AuthContext.logout", error);
