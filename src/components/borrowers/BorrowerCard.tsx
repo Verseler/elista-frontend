@@ -5,7 +5,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import OverdueAlert from "@/components/ui/overdue-alert";
 import {
   BorrowerCardDetail,
   BorrowerCardDetailLabel,
@@ -66,10 +65,6 @@ export function BorrowerCard({ borrower }: BorrowerCardProps) {
               {borrower.transaction_count}
             </BorrowerCardDetailValue>
           </BorrowerCardDetail>
-
-          {borrower.overdue_count > 0 && (
-            <OverdueAlert count={borrower.overdue_count} />
-          )}
 
           <Separator />
 
