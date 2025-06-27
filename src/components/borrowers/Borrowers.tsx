@@ -13,7 +13,7 @@ import { Link, useSearchParams } from "react-router";
 
 export default function Borrowers() {
   const { data } = useGetBorrowers();
-  const [searchParams, _] = useSearchParams(); 
+  const [searchParams, _] = useSearchParams();
   const search = searchParams.get("search") || "";
 
   const filteredBorrowers = data?.filter(

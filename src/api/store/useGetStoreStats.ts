@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import axios from '../axiosConfig';
+import axios from '@/api/axiosConfig';
 import type { DashboardStats } from '@/types';
 
 export const useGetStoreStats = () => {
@@ -11,8 +11,6 @@ export const useGetStoreStats = () => {
           return res.data;
         }
       })
-      .catch(error => {
-        throw error;
-      })
+      .catch(error => { throw error })
   });
 }
