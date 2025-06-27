@@ -9,7 +9,7 @@ import { useGetStoreStats } from "@/api/store/useGetStoreStats";
 import StatsCardSkeleton from "@/components/skeletons/StatsCardSkeleton";
 import StatsCardsContainer from "@/components/statsCard/StatsCardsContainer";
 
-export function StatsCards() {
+export function StoreOwnerStatsCards() {
   const { data, isLoading } = useGetStoreStats();
   if (isLoading) {
     return (
