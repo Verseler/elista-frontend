@@ -22,24 +22,30 @@ import InputPassword from "@/components/ui/input-password";
 import { Separator } from "@/components/ui/separator";
 import GuestHeader from "@/components/headers/GuestHeader";
 
+const ERROR_FIELDS_DEFAULT = {
+  name: "",
+  email: "",
+  phone: "",
+  password: "",
+  password_confirmation: "",
+  store_name: "",
+  store_image: "",
+  store_location: "",
+};
+
+type RegisterFormError = Partial<
+  Omit<RegisterForm, "store_image"> & {
+    store_image: string;
+  }
+>;
+
 export default function RegisterPage() {
   const { mutate, error, isPending } = useRegister();
 
   const [currentStep, setCurrentStep] = useState(1);
-  const serverErrors = (error as Partial<
-    Omit<RegisterForm, "store_image"> & {
-      store_image: string;
-    }
-  >) || {
-    name: "",
-    email: "",
-    phone: "",
-    password: "",
-    password_confirmation: "",
-    store_name: "",
-    store_image: "",
-    store_location: "",
-  };
+  const [serverErrors, setServerError] = useState<RegisterFormError>(
+    (error as RegisterFormError) || ERROR_FIELDS_DEFAULT
+  );
 
   const [form, setForm] = useState<RegisterForm>({
     // Store Owner Info
@@ -86,11 +92,32 @@ export default function RegisterPage() {
         !form.password ||
         !form.password_confirmation
       ) {
-        alert("Please fill in all required fields");
+        const requiredMessage = "Please fill in all required fields";
+
+        const newErrors = {
+          name: !form.name ? requiredMessage : "",
+          email: !form.email ? requiredMessage : "",
+          phone: "",
+          password: !form.password ? requiredMessage : "",
+          password_confirmation: !form.password_confirmation
+            ? requiredMessage
+            : "",
+          store_name: "",
+          store_image: "",
+          store_location: "",
+        };
+
+        setServerError({ ...newErrors });
         return;
       }
       if (form.password !== form.password_confirmation) {
-        alert("Passwords don't match");
+        setServerError((prevServerErrors) => {
+          return {
+            ...prevServerErrors,
+            password: "Passwords don't match",
+            password_confirmation: "Passwords don't match",
+          };
+        });
         return;
       }
     }
