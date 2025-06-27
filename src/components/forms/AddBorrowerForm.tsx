@@ -49,7 +49,7 @@ export function AddBorrowerForm() {
     const emailTemplate = `${newName
       .toLowerCase()
       .replace(/\s+/g, ".")
-      .replace(/[^a-z0-9.]/g, "")}@example.com`;
+      .replace(/[^a-z0-9.]/g, "")}@gmail.com`;
     const generatedEmail = newName ? emailTemplate : "";
 
     setForm((prevForm) => ({
