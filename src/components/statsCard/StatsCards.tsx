@@ -31,14 +31,14 @@ export function StatsCards() {
       <StatsCard
         title="Outstanding Amount"
         value={data?.totalOutstanding}
-        withPesoSign
+        isCurrency
         icon={DollarSignIcon}
         variant="destructive"
       />
       <StatsCard
         title="Monthly Revenue"
         value={data?.monthlyRevenue}
-        withPesoSign
+        isCurrency
         icon={TrendingUpIcon}
         variant="success"
       />
