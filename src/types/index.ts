@@ -56,7 +56,7 @@ export type Transaction = {
   borrower?: User
   items?: Item[]
   payments?: Payment[]
-  remaining_balance?: number
+  outstanding_balance?: number
 }
 
 export type TransactionItem = {
@@ -105,6 +105,12 @@ export type Payment = {
   updated_at: string
 }
 
+export type PaymentForm = {
+  user_id: number;
+  amount: number;
+  notes: string;
+}
+
 export type DashboardStats = {
   totalBorrowers: number
   totalOutstanding: number
@@ -118,18 +124,5 @@ export type BorrowerWithStats = User & {
   outstanding_balance: number;
   transaction_count: number;
   last_transaction_date?: string;
-  overdue_count: number;
-}
-
-export type PaymentFormData = {
-  transaction_id: number
-  amount: number
-  payment_date?: Date
-  notes?: string
-}
-
-export type BorrowerProfile = {
-  borrower: User
-  transactions: Transaction[]
-  totalOutstanding: number
+  transactions: Transaction[];
 }
