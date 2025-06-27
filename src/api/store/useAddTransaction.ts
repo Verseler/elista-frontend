@@ -1,17 +1,15 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import axios from '@/api/axiosConfig';
 import type { TransactionForm, TransactionFormErrors } from '@/types';
-import { useNavigate } from 'react-router';
-import { useAuth } from '@/hooks/useAuth';
 import type { AxiosError } from 'axios';
+import { toast } from 'sonner';
 
 type AddTransactionResponse = {
   errors: TransactionFormErrors;
 }
 
 export const useAddTransaction = () => {
-  const navigate = useNavigate();
-  const { user } = useAuth();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (form: TransactionForm) => axios.post<TransactionForm>("transaction", form)
@@ -33,10 +31,14 @@ export const useAddTransaction = () => {
         throw error;
        }),
     onSuccess: () => {
-      //Redirect to Borrower Detail page
-      if(user) {
-        navigate(`/store-owner/borrowers/${user.id}`);
-      }
+      queryClient.invalidateQueries({
+        queryKey: ['borrowers'],
+      });
+
+      toast("Successfully create transaction", {
+        position: 'top-center',
+        className: '!border !border-green-500 !bg-green-50 !text-green-700',
+      });
     }
   });
 }
