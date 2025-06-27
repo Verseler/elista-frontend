@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 type ContainerProps = {
-  className: React.HTMLProps<HTMLElement>["className"];
+  className?: React.HTMLProps<HTMLElement>["className"];
   children: React.ReactNode;
 };
 
