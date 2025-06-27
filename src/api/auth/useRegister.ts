@@ -3,6 +3,7 @@ import type { RegisterForm, User } from '@/types';
 import { useMutation } from '@tanstack/react-query';
 import axios from '@/api/axiosConfig';
 import type { AxiosError } from 'axios';
+import { toast } from 'sonner';
 
 type RegisterErrorResponse = {
   errors: {
@@ -44,9 +45,10 @@ export const useRegister = () => {
         })
         .catch(error => {
           const serverErrors = (error as AxiosError<RegisterErrorResponse>).response?.data.errors;
-
+ 
           if (serverErrors) {
             throw {
+              message: error.response?.data.message,
               name: serverErrors.name?.[0] ?? undefined,
               email: serverErrors.email?.[0] ?? undefined,
               password: serverErrors.password?.[0] ?? undefined,
@@ -60,5 +62,11 @@ export const useRegister = () => {
     
           throw error;
         }),
+        onError: (error) => {
+          toast(error.message, {
+              position: 'top-center',
+              className: '!border !border-red-500 !bg-red-50 !text-red-700',
+        });
+        }
   });
 }

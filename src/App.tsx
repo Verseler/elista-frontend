@@ -9,32 +9,37 @@ import BorrowerProfilePage from "@/pages/BorrowerProfilePage";
 import NotFoundPage from "@/pages/NotFoundPage";
 import GuestRoutes from "@/components/auth/GuestRoutes";
 import ProtectedRoutes from "@/components/auth/ProtectedRoutes";
+import { Toaster } from "@/components/ui/sonner";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<LandingPage />} />
-      <Route element={<GuestRoutes />}>
-        <Route path="login" element={<LoginPage />} />
-        <Route path="register" element={<RegisterPage />} />
-      </Route>
-      <Route
-        path="borrower"
-        element={<ProtectedRoutes allowedRoles={["borrower"]} />}
-      >
-        <Route index element={<BorrowerDashboardPage />} />
-        <Route path="detail" element={<BorrowerDetailPage />} />
-        <Route path="profile" element={<BorrowerProfilePage />} />
-      </Route>
-      <Route
-        path="store-owner"
-        element={<ProtectedRoutes allowedRoles={["store_owner"]} />}
-      >
-        <Route index element={<StoreOwnerDashboardPage />} />
-      </Route>
+    <div>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route element={<GuestRoutes />}>
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
+        </Route>
+        <Route
+          path="borrower"
+          element={<ProtectedRoutes allowedRoles={["borrower"]} />}
+        >
+          <Route index element={<BorrowerDashboardPage />} />
+          <Route path="profile" element={<BorrowerProfilePage />} />
+        </Route>
+        <Route
+          path="store-owner"
+          element={<ProtectedRoutes allowedRoles={["store_owner"]} />}
+        >
+          <Route index element={<StoreOwnerDashboardPage />} />
+          <Route path="borrowers/:id" element={<BorrowerDetailPage />} />
+        </Route>
 
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+
+      <Toaster />
+    </div>
   );
 }
 

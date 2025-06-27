@@ -11,16 +11,16 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { Store, MailIcon, LockIcon } from "lucide-react";
+import { MailIcon, LockIcon } from "lucide-react";
 import type { LoginForm } from "@/types/index";
 import MainLayout from "@/components/layout/MainLayout";
-import MainHeader from "@/components/headers/MainHeader";
 import Container from "@/components/ui/container";
 import InputPassword from "@/components/ui/input-password";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
 import { useLogin } from "@/api/auth/useLogin";
 import InputError from "@/components/ui/input-error";
+import StoreIcon from "@/components/ui/store-icon";
+import GuestHeader from "@/components/headers/GuestHeader";
 
 export default function LoginPage() {
   const { mutate, error, isPending } = useLogin();
@@ -45,21 +45,12 @@ export default function LoginPage() {
 
   return (
     <MainLayout>
-      <MainHeader>
-        <Button variant="ghost" asChild>
-          <Link to="/login">Sign In</Link>
-        </Button>
-        <Button className="bg-primary-600 hover:bg-primary-700" asChild>
-          <Link to="/register">Get Started</Link>
-        </Button>
-      </MainHeader>
+      <GuestHeader />
 
       <Container className="mt-14 w-full max-w-lg">
         <Card className="border-0">
           <CardHeader className="text-center pb-8">
-            <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <Store className="w-8 h-8 text-white" />
-            </div>
+            <StoreIcon />
             <CardTitle className="text-2xl font-bold text-gray-900">
               Welcome Back
             </CardTitle>
@@ -108,29 +99,9 @@ export default function LoginPage() {
                 <InputError>{serverErrors?.password}</InputError>
               </div>
 
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3 ps-1">
-                  <Checkbox id="terms" />
-                  <Label
-                    htmlFor="terms"
-                    className="font-normal text-neutral-500"
-                  >
-                    Accept terms and conditions
-                  </Label>
-                </div>
-
-                <Button
-                  type="button"
-                  variant="link"
-                  className="text-primary-600 hover:text-primary-700 p-0"
-                >
-                  Forgot password?
-                </Button>
-              </div>
-
               <Button
                 type="submit"
-                className="w-full h-12 bg-primary hover:bg-primary-700 font-semibold"
+                className="w-full h-12 mt-2 bg-primary hover:bg-primary-700 font-semibold"
                 disabled={isPending}
               >
                 {isPending ? "Signing in..." : "Sign In"}

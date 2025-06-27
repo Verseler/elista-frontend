@@ -10,17 +10,9 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import {
-  Mail,
-  Lock,
-  User,
-  Store,
-  MapPin,
-  Upload,
-} from "lucide-react";
+import { Mail, Lock, User, Store, MapPin, Upload } from "lucide-react";
 import type { RegisterForm } from "@/types";
 import MainLayout from "@/components/layout/MainLayout";
-import MainHeader from "@/components/headers/MainHeader";
 import { Link } from "react-router";
 import Container from "@/components/ui/container";
 import StoreIcon from "@/components/ui/store-icon";
@@ -28,25 +20,32 @@ import { useRegister } from "@/api/auth/useRegister";
 import InputError from "@/components/ui/input-error";
 import InputPassword from "@/components/ui/input-password";
 import { Separator } from "@/components/ui/separator";
+import GuestHeader from "@/components/headers/GuestHeader";
+
+const ERROR_FIELDS_DEFAULT = {
+  name: "",
+  email: "",
+  phone: "",
+  password: "",
+  password_confirmation: "",
+  store_name: "",
+  store_image: "",
+  store_location: "",
+};
+
+type RegisterFormError = Partial<
+  Omit<RegisterForm, "store_image"> & {
+    store_image: string;
+  }
+>;
 
 export default function RegisterPage() {
   const { mutate, error, isPending } = useRegister();
 
   const [currentStep, setCurrentStep] = useState(1);
-  const serverErrors = (error as Partial<
-    Omit<RegisterForm, "store_image"> & {
-      store_image: string;
-    }
-  >) || {
-    name: "",
-    email: "",
-    phone: "",
-    password: "",
-    password_confirmation: "",
-    store_name: "",
-    store_image: "",
-    store_location: "",
-  };
+  const [serverErrors, setServerError] = useState<RegisterFormError>(
+    (error as RegisterFormError) || ERROR_FIELDS_DEFAULT
+  );
 
   const [form, setForm] = useState<RegisterForm>({
     // Store Owner Info
@@ -93,11 +92,32 @@ export default function RegisterPage() {
         !form.password ||
         !form.password_confirmation
       ) {
-        alert("Please fill in all required fields");
+        const requiredMessage = "Please fill in all required fields";
+
+        const newErrors = {
+          name: !form.name ? requiredMessage : "",
+          email: !form.email ? requiredMessage : "",
+          phone: "",
+          password: !form.password ? requiredMessage : "",
+          password_confirmation: !form.password_confirmation
+            ? requiredMessage
+            : "",
+          store_name: "",
+          store_image: "",
+          store_location: "",
+        };
+
+        setServerError({ ...newErrors });
         return;
       }
       if (form.password !== form.password_confirmation) {
-        alert("Passwords don't match");
+        setServerError((prevServerErrors) => {
+          return {
+            ...prevServerErrors,
+            password: "Passwords don't match",
+            password_confirmation: "Passwords don't match",
+          };
+        });
         return;
       }
     }
@@ -110,14 +130,7 @@ export default function RegisterPage() {
 
   return (
     <MainLayout>
-      <MainHeader>
-        <Button variant="ghost" asChild>
-          <Link to="/login">Sign In</Link>
-        </Button>
-        <Button className="bg-primary-600 hover:bg-primary-700" asChild>
-          <Link to="/register">Get Started</Link>
-        </Button>
-      </MainHeader>
+      <GuestHeader />
 
       <Container className="w-full mt-14 max-w-2xl">
         <Card className="border-0">
@@ -327,7 +340,10 @@ export default function RegisterPage() {
                       >
                         <Upload className="h-5 w-5 text-gray-400" />
                         <span className="text-gray-600">
-                          Upload store photo <span className="text-sm text-gray-500">(optional)</span>
+                          Upload store photo{" "}
+                          <span className="text-sm text-gray-500">
+                            (optional)
+                          </span>
                         </span>
                       </label>
                       <input

@@ -1,12 +1,13 @@
 import { Card, CardContent } from "@/components/ui/card";
 import type { LucideIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, formatCurrency } from "@/lib/utils";
 
-type StatsVariant =  "default" | "destructive" | "success";
+type StatsVariant = "default" | "destructive" | "success";
 
 type StatsCardProps = {
   title: string;
   value: string | number | undefined;
+  isCurrency?: boolean;
   icon: LucideIcon;
   className?: string;
   variant?: StatsVariant;
@@ -14,7 +15,8 @@ type StatsCardProps = {
 
 export function StatsCard({
   title,
-  value,
+  value: givenValue,
+  isCurrency = false,
   icon: Icon,
   className,
   variant = "default",
@@ -24,6 +26,12 @@ export function StatsCard({
     destructive: "text-red-700",
     success: "text-green-700",
   };
+
+  const value = !givenValue
+    ? "0"
+    : isCurrency && typeof givenValue === "number"
+    ? formatCurrency(givenValue)
+    : givenValue;
 
   return (
     <Card
@@ -37,7 +45,7 @@ export function StatsCard({
           <div className="space-y-2">
             <p className="text-sm font-medium text-gray-600">{title}</p>
             <p className={cn("text-3xl font-bold", valueVariantStyle[variant])}>
-              {value ?? '-'}
+              {value}
             </p>
           </div>
           <div className="flex-shrink-0">

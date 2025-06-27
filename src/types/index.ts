@@ -31,6 +31,11 @@ export type RegisterForm = {
   store_location?: string
 }
 
+export type BorrowerRegisterForm = Omit<
+  RegisterForm,
+  "store_image" | "store_name" | "store_location"
+>;
+
 export type Store = {
   id: number
   name: string
@@ -42,7 +47,6 @@ export type Store = {
 
 export type Transaction = {
   id: number
-  proof_image?: string
   total_price: number
   borrower_id: number
   store_id: number
@@ -52,8 +56,33 @@ export type Transaction = {
   borrower?: User
   items?: Item[]
   payments?: Payment[]
-  remaining_balance?: number
+  outstanding_balance?: number
 }
+
+export type TransactionItem = {
+    name: string;
+    price: number;
+    quantity: number;
+};
+
+export type TransactionForm = Partial<
+  Pick<Transaction, "borrower_id">
+> & {
+  items: TransactionItem[];
+  due_date?: Date | undefined;
+};
+
+export type TransactionItemError = {
+    name?: string,
+    price?: string;
+    quantity?: string
+};
+
+export type TransactionFormErrors = Partial<{
+  borrower_id: string;
+  items: TransactionItemError[],
+  due_date?: string;
+}>;
 
 export type Item = {
   id: number
@@ -76,6 +105,12 @@ export type Payment = {
   updated_at: string
 }
 
+export type PaymentForm = {
+  user_id: number;
+  amount: number;
+  notes: string;
+}
+
 export type DashboardStats = {
   totalBorrowers: number
   totalOutstanding: number
@@ -84,22 +119,11 @@ export type DashboardStats = {
 }
 
 export type BorrowerWithStats = User & {
-  totalOutstanding: number
-  totalPaid: number
-  lastTransaction?: string
-  transactionCount: number
-  overdueCount: number
-}
-
-export type PaymentFormData = {
-  transaction_id: number
-  amount: number
-  payment_date?: Date
-  notes?: string
-}
-
-export type BorrowerProfile = {
-  borrower: User
-  transactions: Transaction[]
-  totalOutstanding: number
+  total_paid: number;
+  total_loan_amount: number;
+  outstanding_balance: number;
+  transaction_count: number;
+  last_transaction_date?: string;
+  transactions: Transaction[];
+  overdue_transactions: Transaction[];
 }

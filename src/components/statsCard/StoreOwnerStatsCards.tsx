@@ -9,9 +9,8 @@ import { useGetStoreStats } from "@/api/store/useGetStoreStats";
 import StatsCardSkeleton from "@/components/skeletons/StatsCardSkeleton";
 import StatsCardsContainer from "@/components/statsCard/StatsCardsContainer";
 
-export function StatsCards() {
+export function StoreOwnerStatsCards() {
   const { data, isLoading } = useGetStoreStats();
-
   if (isLoading) {
     return (
       <StatsCardsContainer>
@@ -31,13 +30,15 @@ export function StatsCards() {
       />
       <StatsCard
         title="Outstanding Amount"
-        value={`₱${data?.totalOutstanding}`}
+        value={data?.totalOutstanding}
+        isCurrency
         icon={DollarSignIcon}
         variant="destructive"
       />
       <StatsCard
         title="Monthly Revenue"
-        value={`₱${data?.monthlyRevenue}`}
+        value={data?.monthlyRevenue}
+        isCurrency
         icon={TrendingUpIcon}
         variant="success"
       />
