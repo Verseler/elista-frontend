@@ -30,14 +30,14 @@ export default function BorrowerDashboardPage() {
 
         <StatsCards />
 
-        {totalOutstanding && totalOutstanding > 0 && (
+        {!!totalOutstanding && totalOutstanding > 0 && (
           <Alert variant="destructive" className="my-4">
             <AlertTriangleIcon />
             <AlertTitle>Outstanding Balance!</AlertTitle>
             <AlertDescription>
               You have {formatCurrency(totalOutstanding)} in outstanding
               balance.
-              {overdueTransactionsLength &&
+              {!!overdueTransactionsLength &&
                 overdueTransactionsLength > 0 &&
                 ` ${overdueTransactionsLength} transaction(s) are overdue.`}
             </AlertDescription>
