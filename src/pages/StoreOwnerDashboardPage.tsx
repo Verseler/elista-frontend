@@ -6,15 +6,21 @@ import { StoreOwnerStatsCards as StatsCards } from "@/components/statsCard/Store
 import Borrowers from "@/components/borrowers/Borrowers";
 import { AddBorrowerForm } from "@/components/forms/AddBorrowerForm";
 import { AddTransactionForm } from "@/components/forms/AddTransactionForm";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function StoreOwnerDashboardPage() {
+  const { user } = useAuth();
+
   return (
     <MainLayout>
       <MainHeader />
       <Container className="py-8">
         <PageHeader
-          title="Store Dashboard"
-          description="Manage your borrowers and track transactions"
+          title={user?.store?.name || "Store Dashboard"}
+          description={
+            user?.store?.location ||
+            "Manage your borrowers and track transactions"
+          }
         >
           <AddBorrowerForm />
           <AddTransactionForm />

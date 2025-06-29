@@ -2,14 +2,15 @@ export type UserRole = "store_owner" | "borrower";
 
 
 export type User = {
-  id: number
-  name: string
-  email: string
-  phone?: string
-  store_id: number
-  role: UserRole
-  created_at: string
-  updated_at: string
+  id: number;
+  name: string;
+  email: string;
+  phone?: string;
+  store_id: number;
+  store: Store;
+  role: UserRole;
+  created_at: string;
+  updated_at: string;
 }
 
 export type LoginForm = {
@@ -27,19 +28,17 @@ export type RegisterForm = {
 
   // Store Info
   store_name: string
-  store_image?: File
   store_location?: string
 }
 
 export type BorrowerRegisterForm = Omit<
   RegisterForm,
-  "store_image" | "store_name" | "store_location"
+  "store_name" | "store_location"
 >;
 
 export type Store = {
   id: number
   name: string
-  image?: string
   location?: string
   created_at: string
   updated_at: string
@@ -112,10 +111,10 @@ export type PaymentForm = {
 }
 
 export type DashboardStats = {
-  totalBorrowers: number
-  totalOutstanding: number
-  monthlyRevenue: number
-  totalItemsLent: number
+  totalBorrowers: number;
+  totalOutstanding: number;
+  monthlyRevenue: number;
+  totalItemsLent: number;
 }
 
 export type BorrowerWithStats = User & {
