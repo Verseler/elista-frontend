@@ -10,13 +10,18 @@ import MainHeader from "@/components/headers/MainHeader";
 import Container from "@/components/ui/container";
 import BorrowerDetailCard from "@/components/borrowers/BorrowerInfoCard";
 import { PaymentForm } from "@/components/forms/PaymentForm";
+import BorrowerDetailPageSkeleton from "@/components/skeletons/BorrowerDetailPageSkeleton";
 
 export default function BorrowerDetailPage() {
   const { id } = useParams<{ id: string }>();
 
-  const { data: borrower } = useGetBorrower(id || "");
+  const { data: borrower, isLoading } = useGetBorrower(id || "");
   const transactions: Transaction[] = borrower?.transactions || [];
   const borrowerBalance = borrower?.outstanding_balance ?? 0;
+
+  if (isLoading) {
+    return <BorrowerDetailPageSkeleton />;
+  }
 
   return (
     <MainLayout>
