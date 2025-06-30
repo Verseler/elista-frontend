@@ -16,4 +16,25 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
+axios.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const resStatus = error.response?.status;
+
+    switch(resStatus) {
+      case 401:
+        // Clear the token and authorization header
+        localStorage.removeItem("token");
+        axios.defaults.headers.common["Authorization"] = "";
+
+        window.location.href = "/unauthorized";
+
+        return Promise.reject(error);
+
+      default:
+        return Promise.reject(error);
+    }
+  }
+);
+
 export default axios;

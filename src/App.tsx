@@ -10,6 +10,7 @@ import NotFoundPage from "@/pages/NotFoundPage";
 import GuestRoutes from "@/components/auth/GuestRoutes";
 import ProtectedRoutes from "@/components/auth/ProtectedRoutes";
 import { Toaster } from "@/components/ui/sonner";
+import UnauthorizedAccessPage from '@/pages/UnauthorizedAccessPage';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route path="borrowers/:id" element={<BorrowerDetailPage />} />
         </Route>
 
+        <Route path="/unauthorized" element={<UnauthorizedAccessPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
 
