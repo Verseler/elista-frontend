@@ -11,6 +11,7 @@ import Container from "@/components/ui/container";
 import BorrowerDetailCard from "@/components/borrowers/BorrowerInfoCard";
 import { PaymentForm } from "@/components/forms/PaymentForm";
 import BorrowerDetailPageSkeleton from "@/components/skeletons/BorrowerDetailPageSkeleton";
+import BorrowerPayments from "@/components/borrowers/BorrowerPayments";
 
 export default function BorrowerDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -56,11 +57,14 @@ export default function BorrowerDetailPage() {
             />
           </div>
 
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-3 space-y-8">
             <TransactionList
               transactions={transactions}
               totalOutstanding={borrowerBalance}
             />
+            {borrower?.payments && borrower?.payments.length > 0 && (
+              <BorrowerPayments payments={borrower?.payments} />
+            )}
           </div>
         </div>
       </Container>

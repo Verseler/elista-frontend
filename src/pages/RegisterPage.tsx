@@ -10,7 +10,7 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { Mail, Lock, User, Store, MapPin, Upload } from "lucide-react";
+import { Mail, Lock, User, Store, MapPin } from "lucide-react";
 import type { RegisterForm } from "@/types";
 import MainLayout from "@/components/layout/MainLayout";
 import { Link } from "react-router";
@@ -29,7 +29,6 @@ const ERROR_FIELDS_DEFAULT = {
   password: "",
   password_confirmation: "",
   store_name: "",
-  store_image: "",
   store_location: "",
 };
 
@@ -57,10 +56,8 @@ export default function RegisterPage() {
 
     // Store Info
     store_name: "",
-    store_image: undefined,
     store_location: "",
   });
-  const [storeImagePreview, setStoreImagePreview] = useState<string>("");
 
   function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
     setForm((prevForm) => ({ ...prevForm, [e.target.name]: e.target.value }));
@@ -70,18 +67,6 @@ export default function RegisterPage() {
     e.preventDefault();
 
     mutate(form);
-  };
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setForm({ ...form, store_image: file });
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setStoreImagePreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
   };
 
   const nextStep = () => {
@@ -327,39 +312,6 @@ export default function RegisterPage() {
                         invalid={!!serverErrors?.store_location}
                         disabled={isPending}
                       />
-                    </div>
-                  </div>
-
-                  {/* TODO */}
-                  <div className="space-y-2">
-                    <Label htmlFor="storeImage">Store Photo</Label>
-                    <div className="flex items-center gap-4">
-                      <label
-                        htmlFor="store-image-upload"
-                        className="flex items-center gap-2 cursor-pointer border-2 border-dashed border-gray-300 rounded-lg p-4 hover:border-primary-400 transition-colors flex-1"
-                      >
-                        <Upload className="h-5 w-5 text-gray-400" />
-                        <span className="text-gray-600">
-                          Upload store photo{" "}
-                          <span className="text-sm text-gray-500">
-                            (optional)
-                          </span>
-                        </span>
-                      </label>
-                      <input
-                        id="store-image-upload"
-                        type="file"
-                        accept="image/*"
-                        className="hidden"
-                        onChange={handleImageChange}
-                      />
-                      {storeImagePreview && (
-                        <img
-                          src={storeImagePreview || "/placeholder.svg"}
-                          alt="Store preview"
-                          className="h-16 w-16 object-cover rounded-lg border"
-                        />
-                      )}
                     </div>
                   </div>
 
