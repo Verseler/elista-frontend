@@ -97,6 +97,7 @@ export type Item = {
 export type Payment = {
   id: number
   amount: number
+  notes: string
   user_id: number
   store_id: number
   transaction_id: number
@@ -125,4 +126,5 @@ export type BorrowerWithStats = User & {
   last_transaction_date?: string;
   transactions: Transaction[];
   overdue_transactions: Transaction[];
+  payments: Payment[];
 }

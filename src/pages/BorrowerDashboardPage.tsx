@@ -10,6 +10,7 @@ import { useGetBorrower } from "@/api/borrower/useGetBorrower";
 import { formatCurrency } from "@/lib/utils";
 import { AlertTriangleIcon } from "lucide-react";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import BorrowerPayments from "@/components/borrowers/BorrowerPayments";
 
 export default function BorrowerDashboardPage() {
   const { user } = useAuth();
@@ -44,10 +45,16 @@ export default function BorrowerDashboardPage() {
           </Alert>
         )}
 
-        <TransactionList
-          transactions={transactions}
-          totalOutstanding={totalOutstanding}
-        />
+        <div className="space-y-6 md:space-y-10">
+          <TransactionList
+            transactions={transactions}
+            totalOutstanding={totalOutstanding}
+          />
+
+          {borrower?.payments && borrower?.payments.length > 0 && (
+            <BorrowerPayments payments={borrower?.payments} />
+          )}
+        </div>
       </Container>
     </MainLayout>
   );
